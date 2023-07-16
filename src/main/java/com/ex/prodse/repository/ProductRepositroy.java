@@ -1,6 +1,7 @@
 package com.ex.prodse.repository;
 
 import com.ex.prodse.entity.Product;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
  * 작성날짜:2023-07-16
  * desc :
  **/
+@Component
 public class ProductRepositroy {
 
     private Map<Long , Product> persistence = new HashMap<>();

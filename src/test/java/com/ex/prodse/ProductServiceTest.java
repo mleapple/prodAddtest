@@ -9,24 +9,20 @@ import com.ex.prodse.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * fileName:ProductServiceTest
  * 작성날짜:2023-07-16
  * desc :
  **/
+@SpringBootTest
 public class ProductServiceTest {
 
+    @Autowired
     private ProductService productService;
-    private ProductPort productPort;
-    private ProductRepositroy productRepositroy;
 
-    @BeforeEach
-    void 서비스생성(){
-        productRepositroy   = new ProductRepositroy();
-        productPort         = new ProductAdapter(productRepositroy);
-        productService      = new ProductService(productPort);
-    }
     @Test
     @Order(3)
     void 상품등록(){

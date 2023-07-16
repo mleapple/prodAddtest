@@ -2,12 +2,15 @@ package com.ex.prodse.service;
 
 import com.ex.prodse.dto.AddProductRequest;
 import com.ex.prodse.entity.Product;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * fileName:ProductService
  * 작성날짜:2023-07-16
  * desc :
  **/
+@Component
 public class ProductService {
     private final ProductPort productPort;
 
