@@ -40,6 +40,7 @@ public class ProductServiceTest {
         final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
         final AddProductRequest addProductRequest = new AddProductRequest(name, price , discountPolicy);
         productService.addProduct(addProductRequest);
+        //
     }
 
 
