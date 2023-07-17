@@ -1,14 +1,13 @@
 package com.ex.prodse.contoller;
 
 import com.ex.prodse.dto.AddProductRequest;
+import com.ex.prodse.dto.GetProductResponse;
+import com.ex.prodse.entity.Product;
 import com.ex.prodse.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * fileName:ProductContrller
@@ -32,5 +31,12 @@ public class ProductContrller {
         productService.addProduct(addProductRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping
+    public GetProductResponse getProductResponse(@PathVariable("productId") final long productId){
+
+            final GetProductResponse product = productService.getProduct(productId);
+            return product;
     }
 }

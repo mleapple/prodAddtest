@@ -1,9 +1,11 @@
 package com.ex.prodse.service;
 
 import com.ex.prodse.dto.AddProductRequest;
+import com.ex.prodse.dto.GetProductResponse;
 import com.ex.prodse.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * fileName:ProductService
@@ -23,4 +25,11 @@ public class ProductService {
         final Product product = new Product(addProductRequest.getName(), addProductRequest.getPrice(), addProductRequest.getDiscountPolicy());
         productPort.save(product);
     }
+
+
+    public GetProductResponse getProduct(final  long productId){
+      final Product product =  productPort.getProduct(productId);
+      return new GetProductResponse(product.getId() , product.getName(), product.getPrice(),product.getDiscountPolicy());
+
+    };
 }
