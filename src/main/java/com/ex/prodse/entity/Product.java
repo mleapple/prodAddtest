@@ -45,4 +45,14 @@ public class Product {
     }
 
 
+    public void update(String name, int price, DiscountPolicy discountPolicy) {
+        Assert.hasText(name ,"이름은 필수 입니다");
+        Assert.isTrue(price > 0 ,"상품가격은 0보다 커야합니다");
+        Assert.notNull(discountPolicy,"할인정책은 필수 입니다");
+        this.name = name;
+        this.price = price;
+        this.discountPolicy = discountPolicy;
+
+
+    }
 }

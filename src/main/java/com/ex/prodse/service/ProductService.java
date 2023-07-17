@@ -2,6 +2,8 @@ package com.ex.prodse.service;
 
 import com.ex.prodse.dto.AddProductRequest;
 import com.ex.prodse.dto.GetProductResponse;
+
+import com.ex.prodse.dto.UpdateProductRequest;
 import com.ex.prodse.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,4 +34,10 @@ public class ProductService {
       return new GetProductResponse(product.getId() , product.getName(), product.getPrice(),product.getDiscountPolicy());
 
     };
+
+    public void updateProduct(Long productId, UpdateProductRequest updateProductRequest) {
+        final Product product = productPort.getProduct(productId);//
+        product.update(updateProductRequest.getName() ,updateProductRequest.getPrice() , updateProductRequest.getDiscountPolicy());
+        productPort.save(product);
+    }
 }
