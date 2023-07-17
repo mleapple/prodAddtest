@@ -2,7 +2,6 @@ package com.ex.prodse;
 
 import com.ex.prodse.dto.AddProductRequest;
 import com.ex.prodse.em.DiscountPolicy;
-import com.ex.prodse.repository.ProductRepositroy;
 import com.ex.prodse.service.ProductAdapter;
 import com.ex.prodse.service.ProductPort;
 import com.ex.prodse.service.ProductService;

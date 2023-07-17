@@ -1,40 +1,37 @@
 package com.ex.prodse.entity;
 
 import com.ex.prodse.em.DiscountPolicy;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.util.Assert;
+
+import javax.persistence.*;
 
 /**
  * fileName:Product
  * 작성날짜:2023-07-16
  * desc :
  **/
+@Entity
+@Table(name="product")
+@Getter
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
-    private   Long id;
-    private final String name;
-    private final int price;
-    private final DiscountPolicy discountPolicy;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+    private  String name;
+    private  int price;
+    private  DiscountPolicy discountPolicy;
 
     public String getName() {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", discountPolicy=" + discountPolicy +
-                '}';
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public DiscountPolicy getDiscountPolicy() {
-        return discountPolicy;
-    }
 
     public Product(String name, int price, DiscountPolicy discountPolicy) {
         Assert.hasText(name , "상품명은필수 입니다");
@@ -47,11 +44,5 @@ public class Product {
       //  throw new UnsupportedOperationException("Umsuperted Product");
     }
 
-    public void assignId(final Long id) {
-        this.id = id;
-    }
 
-    public Long getId() {
-        return this.id;
-    }
 }
