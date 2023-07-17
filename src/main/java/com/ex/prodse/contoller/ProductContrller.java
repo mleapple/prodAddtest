@@ -33,10 +33,13 @@ public class ProductContrller {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
-    public GetProductResponse getProductResponse(@PathVariable("productId") final long productId){
+    @GetMapping("/{productId}")
+    public ResponseEntity<GetProductResponse> getProductResponse(@PathVariable("productId") final long productId) {
 
-            final GetProductResponse product = productService.getProduct(productId);
-            return product;
+        final GetProductResponse response = productService.getProduct(productId);
+
+       // return new ResponseEntity(response, HttpStatus.OK);
+
+        return  ResponseEntity.ok(response);
     }
 }

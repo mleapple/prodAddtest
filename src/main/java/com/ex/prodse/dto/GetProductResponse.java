@@ -1,6 +1,7 @@
 package com.ex.prodse.dto;
 
 import com.ex.prodse.em.DiscountPolicy;
+import lombok.Data;
 import org.springframework.util.Assert;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.util.Assert;
  * 작성날짜:2023-07-17
  * desc :
  **/
+
 public  class GetProductResponse {
 
 
@@ -37,5 +39,21 @@ public  class GetProductResponse {
                 ", price=" + price +
                 ", discountPolicy=" + discountPolicy +
                 '}';
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public DiscountPolicy getDiscountPolicy() {
+        return discountPolicy;
     }
 }

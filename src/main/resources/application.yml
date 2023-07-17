@@ -4,3 +4,7 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+logging:
+  level:
+    root: warn
+    com.ex.prodse: debug
