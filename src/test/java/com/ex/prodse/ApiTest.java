@@ -1,0 +1,24 @@
+package com.ex.prodse;
+
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+
+/**
+ * fileName:ApiTest
+ * 작성날짜:2023-07-17
+ * desc :
+ **/
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class ApiTest {
+
+    @LocalServerPort
+    private int port;
+
+    @BeforeEach
+    void 초기설정하기(){
+        RestAssured.port =port;
+
+    }
+}
