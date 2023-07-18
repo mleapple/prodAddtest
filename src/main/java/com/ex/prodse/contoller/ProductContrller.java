@@ -2,6 +2,7 @@ package com.ex.prodse.contoller;
 
 import com.ex.prodse.dto.AddProductRequest;
 import com.ex.prodse.dto.GetProductResponse;
+import com.ex.prodse.dto.UpdateProductRequest;
 import com.ex.prodse.entity.Product;
 import com.ex.prodse.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -35,11 +36,16 @@ public class ProductContrller {
 
     @GetMapping("/{productId}")
     public ResponseEntity<GetProductResponse> getProductResponse(@PathVariable("productId") final long productId) {
-
         final GetProductResponse response = productService.getProduct(productId);
-
        // return new ResponseEntity(response, HttpStatus.OK);
-
         return  ResponseEntity.ok(response);
+    }
+    @PatchMapping("/{productId}")
+    @Transactional
+    public ResponseEntity<Void> updateProduct(@PathVariable("productId") final long productId ,@RequestBody final UpdateProductRequest updateProductRequest){
+//updateProduct(Long productId, UpdateProductRequest updateProductRequest)
+        productService.updateProduct(productId , updateProductRequest);
+
+        return ResponseEntity.ok().build();
     }
 }

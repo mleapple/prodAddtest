@@ -1,6 +1,8 @@
 package com.ex.prodse.dto;
 
 import com.ex.prodse.em.DiscountPolicy;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import org.springframework.util.Assert;
 
 /**
@@ -8,11 +10,19 @@ import org.springframework.util.Assert;
  * 작성날짜:2023-07-17
  * desc :
  **/
+
+
 public class UpdateProductRequest {
 
-    private final String name;
-    private final int price;
-    private final DiscountPolicy discountPolicy;
+
+    private  String name;
+
+    private  int price;
+
+    private  DiscountPolicy discountPolicy;
+
+    public UpdateProductRequest() {
+    }
 
     public UpdateProductRequest(String name, int price, DiscountPolicy discountPolicy) {
 
@@ -25,6 +35,7 @@ public class UpdateProductRequest {
         this.price = price;
         this.discountPolicy = discountPolicy;
     }
+
 
     public String getName() {
         return name;

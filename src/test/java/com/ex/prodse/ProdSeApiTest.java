@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -157,6 +158,35 @@ class ProdSeApiTest extends ApiTest{
         assertThat(getresponse.jsonPath().getLong("id")).isEqualTo(productId); // 같은 값
         assertThat(getresponse.jsonPath().getString("name")).isEqualTo("제네시스"); // 같은 값
         assertThat(getresponse.jsonPath().getInt("price")).isEqualTo(9999);
+    }
+
+    @Test
+    void 삼품_수정_API으로_요청(){
+        // 상품 둥록
+        final String name ="자전거";
+        final int price = 2000;
+        final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
+        final var addProductRequest = new AddProductRequest(name, price , discountPolicy);
+        final long productId = 1L; // 가져올 아이디
+        // api  테스트
+        // 등록
+        final var response = 상품_등록_요청생성(addProductRequest); // 로그 상품등록요청생성(addProductRequest); // 로그
+
+        // 상품 조회
+        // final GetProductResponse getResponse = productService.getProduct(productId);
+
+        final UpdateProductRequest updateProductRequest  = new UpdateProductRequest("제네시스", 9999,DiscountPolicy.NONE);
+
+
+        final  ExtractableResponse<Response> updateResponse = RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(updateProductRequest)
+                .when()
+                .patch("/products/{productId}",productId)
+                .then().log().all().extract();
+
+        assertThat(updateResponse.statusCode()).isEqualTo(HttpStatus.OK.value()); // 같은 값
+        assertThat(productService.getProduct(1L).getName()).isEqualTo("제네시스"); // 같은 값
 
     }
 
