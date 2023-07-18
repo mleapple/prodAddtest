@@ -8,5 +8,12 @@ import com.ex.prodse.entity.Product;
  * desc :
  **/
 public interface DataCrudType {
+
     void save(final Product product);
+
+    Product getProductById(Long productId);
+
+    Product findById(Long productId);
+
+
 }

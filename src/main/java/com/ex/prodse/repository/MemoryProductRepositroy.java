@@ -24,4 +24,14 @@ public class MemoryProductRepositroy implements DataCrudType{
      //   persistence.forEach((i,p)->System.out.println(" i "+i +"="+p.toString()));
     }
 
+    @Override
+    public Product getProductById(Long productId) {
+        return null;
+    }
+
+    @Override
+    public Product findById(Long productId) {
+        return null;
+    }
+
 }
