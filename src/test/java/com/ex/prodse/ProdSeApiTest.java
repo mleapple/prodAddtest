@@ -79,8 +79,6 @@ class ProdSeApiTest extends ApiTest{
                 .get("/products/{productId}" , productId)
                 .then().log().all()
                 .extract();
-
-
     }
 
     @Test
