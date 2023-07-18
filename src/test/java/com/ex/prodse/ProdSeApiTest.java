@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -25,6 +26,9 @@ class ProdSeApiTest extends ApiTest{
 
     @Autowired
     private ProductService productService ;
+
+    @Autowired
+    private ProductPort productPort;
     @Test
     void 상품등록API_톄스트하기(){
         final String name ="상품명";
@@ -105,11 +109,10 @@ class ProdSeApiTest extends ApiTest{
 
     }
     @Test
-    void 삼품_수정_요청(){
+    void 삼품_수정POJO_요청(){
        final Long productId = 1L;
        final UpdateProductRequest request = new UpdateProductRequest("상품수정",3333,DiscountPolicy.NONE);
        final Product product = new Product("상품명",1000,DiscountPolicy.NONE);
-
 
         final ProductPort productPort = new ProductPort() {
             @Override
@@ -124,11 +127,37 @@ class ProdSeApiTest extends ApiTest{
         };
 
         productService = new ProductService(productPort);
-
         productService.updateProduct(productId , request);
-
         log.debug("=================>수정");
         assertThat(product.getName()).isEqualTo("상품수정");
+    }
+
+    @Test
+    void 삼품_수정부트빈으로_요청(){
+        // 상품 둥록
+        final String name ="자전거";
+        final int price = 2000;
+        final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
+        final var addProductRequest = new AddProductRequest(name, price , discountPolicy);
+        final long productId = 1L; // 가져올 아이디
+        // api  테스트
+        // 등록
+        final var response = 상품_등록_요청생성(addProductRequest); // 로그 상품등록요청생성(addProductRequest); // 로그
+
+        // 상품 조회
+        // final GetProductResponse getResponse = productService.getProduct(productId);
+
+        final UpdateProductRequest updateProductRequest  = new UpdateProductRequest("제네시스", 9999,DiscountPolicy.NONE);
+
+        // 상품 수정 , 조회 값 검증
+        productService.updateProduct(productId , updateProductRequest);
+
+        // 수정 값 조회
+        final  ExtractableResponse<Response> getresponse = 상품_조회_요청(productId);
+        assertThat(getresponse.jsonPath().getLong("id")).isEqualTo(productId); // 같은 값
+        assertThat(getresponse.jsonPath().getString("name")).isEqualTo("제네시스"); // 같은 값
+        assertThat(getresponse.jsonPath().getInt("price")).isEqualTo(9999);
+
     }
 
 }
