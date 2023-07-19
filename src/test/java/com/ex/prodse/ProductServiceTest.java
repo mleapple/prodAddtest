@@ -4,10 +4,6 @@ import com.ex.prodse.dto.AddProductRequest;
 import com.ex.prodse.dto.CreateOrderRequest;
 import com.ex.prodse.em.DiscountPolicy;
 import com.ex.prodse.entity.Product;
-import com.ex.prodse.repository.DataCrudType;
-import com.ex.prodse.repository.OrderRepository;
-import com.ex.prodse.repository.ProductRepository;
-import com.ex.prodse.repository.ProductRepository2;
 import com.ex.prodse.service.OrderPort;
 import com.ex.prodse.service.OrderService;
 import com.ex.prodse.service.ProductPort;
@@ -18,10 +14,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -71,6 +63,7 @@ public class ProductServiceTest {
     }
 
 
+    @Autowired
     private OrderService orderService;
 
     @BeforeEach
@@ -79,45 +72,17 @@ public class ProductServiceTest {
         final OrderPort orderPort =  null;
         final ProductPort productPort = null;
 
-        OrderRepository orderRepository = new OrderRepository() {
-            private final Map<Long , com.ex.prodse.entity.Order> persistence = new HashMap<>();
-            private  Long sequence = 0L;
-
-            public void save(final com.ex.prodse.entity.Order order){
-                order.assignId(++sequence);
-                persistence.put(order.getId(),order);
-            }
-            public void mString(){
-             this.persistence.forEach((t , y)-> System.out.println("msg t.toString() = " + y.toString()));
-            }
-
-            @Override
-            public String toString() {
-                mString();
-                return super.toString();
-            }
-        };
-        ProductRepository2 productRepository = new ProductRepository2(){
-
-            @Override
-            public void save(Product product) {
-
-            }
-
-            @Override
-            public Product getProductById(Long productId) {
-                return new Product("BMW",1000,DiscountPolicy.NONE);
-            }
-
-            @Override
-            public Product findById(Long productId) {
-                return new Product("BMW",2000,DiscountPolicy.NONE);
-            }
-        };
-        orderService = new OrderService(new OrderPort(orderRepository, productRepository));
     }
     @Test
     void 상품주문(){
+
+        //상품 등록
+        final String name ="피자";
+        final int price = 2000;
+        final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
+        final AddProductRequest addProductRequest = new AddProductRequest(name, price , discountPolicy);
+        productService.addProduct(addProductRequest);
+
         // 상품주문하기
         final Long productId    = 1L;
         final int quantity      = 2;
