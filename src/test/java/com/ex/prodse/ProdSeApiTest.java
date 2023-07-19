@@ -2,6 +2,7 @@ package com.ex.prodse;
 
 import com.ex.prodse.dto.AddProductRequest;
 
+import com.ex.prodse.dto.CreateOrderRequest;
 import com.ex.prodse.dto.GetProductResponse;
 import com.ex.prodse.dto.UpdateProductRequest;
 import com.ex.prodse.em.DiscountPolicy;
@@ -188,6 +189,40 @@ class ProdSeApiTest extends ApiTest{
         assertThat(updateResponse.statusCode()).isEqualTo(HttpStatus.OK.value()); // 같은 값
         assertThat(productService.getProduct(1L).getName()).isEqualTo("제네시스"); // 같은 값
 
+    }
+
+
+    @Test
+    void 상품주문_API_TEST(){
+
+        //상품 등록
+        final String name ="피자";
+        final int price = 2000;
+        final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
+        final AddProductRequest addProductRequest = new AddProductRequest(name, price , discountPolicy);
+        productService.addProduct(addProductRequest);
+
+
+        final var response = 상품_등록_요청생성(addProductRequest); // 로그 상품등록요청생성(addProductRequest); // 로그
+
+        final Long productId    = 1L;
+        final var getResponse = 상품_조회_요청(productId);
+
+        final Long reslutProductId  = getResponse.jsonPath().getLong("id");
+
+        // 상품주문하기
+
+        final int quantity      = 2;
+        final CreateOrderRequest request = new CreateOrderRequest(reslutProductId , quantity);
+        // 주문생성서비스
+        // orderService.create(request);
+
+        final  ExtractableResponse<Response> orderResponse = RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/order")
+                .then().log().all().extract();
     }
 
 }

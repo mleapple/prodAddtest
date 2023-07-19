@@ -11,6 +11,8 @@ public class CreateOrderRequest {
     private Long productId = 1L;
     private int quantity = 2;
 
+    public CreateOrderRequest(){}
+
     public CreateOrderRequest(Long productId, int quantity) { // 주문 생성하기
         Assert.notNull(productId, "productId 는 null 아닙니다");
         Assert.isTrue(quantity > 0, "quantity 는 0보다 커야 합니다");

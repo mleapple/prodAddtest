@@ -87,7 +87,6 @@ public class ProductServiceTest {
         final Long productId    = 1L;
         final int quantity      = 2;
         final CreateOrderRequest request = new CreateOrderRequest(productId , quantity);
-
         // 주문생성서비스
         orderService.create(request);
     }
